@@ -63,6 +63,7 @@
 				"type": "BlobEventsTrigger",
 				"typeProperties": {
 					"blobPathBeginsWith": "/consolidated-data/blobs/order/",
+					"blobPathEndsWith": ".csv",
 					"ignoreEmptyBlobs": true,
 					"scope": "[parameters('trigger3_event_properties_typeProperties_scope')]",
 					"events": [
