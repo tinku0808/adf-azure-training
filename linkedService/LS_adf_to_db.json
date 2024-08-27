@@ -1,0 +1,17 @@
+{
+	"name": "LS_adf_to_db",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"server": "server-tinku.database.windows.net",
+			"database": "database1",
+			"encrypt": "mandatory",
+			"trustServerCertificate": false,
+			"authenticationType": "SQL",
+			"userName": "tinku",
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDk3QzM0NkEzLTcyMEUtNDhDMS1BQjhDLUFFRUJFMjAxN0QxQV8yMTk1ODA2YS0yN2I2LTQ2NWMtOTY2NC00NzIzYWE0ZDU2NGUiDQp9"
+		}
+	}
+}
