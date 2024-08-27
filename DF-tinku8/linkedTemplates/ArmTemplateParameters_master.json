@@ -38,6 +38,9 @@
 		"trigger1_properties_typeProperties_scope": {
 			"value": "/subscriptions/f42ca8e0-2be1-4d0a-87be-2ce9e5879a34/resourceGroups/tinku/providers/Microsoft.Storage/storageAccounts/tinkustorage8"
 		},
+		"trigger3_event_properties_typeProperties_scope": {
+			"value": "/subscriptions/f42ca8e0-2be1-4d0a-87be-2ce9e5879a34/resourceGroups/tinku/providers/Microsoft.Storage/storageAccounts/tinkustorage8"
+		},
 		"containerUri": {
 			"value": ""
 		},
