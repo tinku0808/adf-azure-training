@@ -5,6 +5,9 @@
 			"referenceName": "LS_adf_storage",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "Q2"
+		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {

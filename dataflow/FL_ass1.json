@@ -1,31 +1,31 @@
 {
-	"name": "FL_transform_data",
+	"name": "FL_ass1",
 	"properties": {
 		"folder": {
-			"name": "Q1"
+			"name": "Q3"
 		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
 				{
 					"dataset": {
-						"referenceName": "DS_des_custormer",
+						"referenceName": "DS_db_customer",
 						"type": "DatasetReference"
 					},
-					"name": "customer"
+					"name": "source1"
 				},
 				{
 					"dataset": {
-						"referenceName": "DS_des_order",
+						"referenceName": "DS_db_order",
 						"type": "DatasetReference"
 					},
-					"name": "order"
+					"name": "source2"
 				}
 			],
 			"sinks": [
 				{
 					"dataset": {
-						"referenceName": "DS_des_transformed_data",
+						"referenceName": "DS_ass1_blob",
 						"type": "DatasetReference"
 					},
 					"name": "sink1"
@@ -33,8 +33,7 @@
 			],
 			"transformations": [
 				{
-					"name": "join1order",
-					"description": "joining the customer and order table"
+					"name": "join1"
 				},
 				{
 					"name": "aggregate1"
@@ -55,28 +54,30 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> customer",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
 				"source(output(",
-				"          OrderID as short,",
+				"          OrderID as string,",
 				"          ProductID as string,",
 				"          ProductName as string,",
-				"          Quantity as integer,",
+				"          Quantity as string,",
 				"          OrderTimestamp as string,",
-				"          Price as double,",
+				"          Price as string,",
 				"          CustomerID as string",
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> order",
-				"customer, order join(customer@CustomerID == order@CustomerID,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source2",
+				"source1, source2 join(source1@CustomerID == source2@CustomerID,",
 				"     joinType:'inner',",
 				"     matchType:'exact',",
 				"     ignoreSpaces: false,",
-				"     broadcast: 'auto')~> join1order",
-				"join1order aggregate(groupBy(customer@CustomerID,",
+				"     broadcast: 'auto')~> join1",
+				"join1 aggregate(groupBy(source1@CustomerID,",
 				"          FirstName,",
-				"          Email),",
-				"     {Total-products} = collect(ProductName)) ~> aggregate1",
+				"          LastName),",
+				"     {total-products} = collect(ProductName)) ~> aggregate1",
 				"aggregate1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     skipDuplicateMapInputs: true,",

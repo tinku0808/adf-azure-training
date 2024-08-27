@@ -1,9 +1,9 @@
 {
-	"name": "PL_dataflow_to_db",
+	"name": "PL_Ass1",
 	"properties": {
 		"activities": [
 			{
-				"name": "Data flow1",
+				"name": "Ass1",
 				"type": "ExecuteDataFlow",
 				"dependsOn": [],
 				"policy": {
@@ -16,7 +16,7 @@
 				"userProperties": [],
 				"typeProperties": {
 					"dataflow": {
-						"referenceName": "dataflow1",
+						"referenceName": "FL_ass1",
 						"type": "DataFlowReference"
 					},
 					"compute": {
@@ -28,7 +28,7 @@
 			}
 		],
 		"folder": {
-			"name": "Q2"
+			"name": "Q3"
 		},
 		"annotations": []
 	}

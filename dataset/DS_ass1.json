@@ -1,20 +1,20 @@
 {
-	"name": "DS_des_order",
+	"name": "DS_ass1",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_adf_storage",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "Q1"
+			"name": "Q3"
 		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "consolidated-order.csv",
-				"folderPath": "Order-details",
+				"fileName": "part-00000-ae72966c-78bd-4ad0-92cb-40bccf41599f-c000.csv",
+				"folderPath": "ass1",
 				"container": "consolidated-data"
 			},
 			"columnDelimiter": ",",
