@@ -1,5 +1,5 @@
 {
-	"name": "AzureSqlTable1",
+	"name": "DS_db_transformed_data",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_adf_to_db",
