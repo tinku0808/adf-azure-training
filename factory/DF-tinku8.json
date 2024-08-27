@@ -1,0 +1,9 @@
+{
+	"name": "DF-tinku8",
+	"location": "centralindia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "7d140a83-1116-4c62-b0cf-acc37d1c0ad1",
+		"tenantId": "2800c0a0-70e9-49be-8733-faeaa6aced99"
+	}
+}
