@@ -1,0 +1,23 @@
+{
+	"name": "DS_stores",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_adf_storage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "240826 Superstore.csv",
+				"container": "input-data"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
