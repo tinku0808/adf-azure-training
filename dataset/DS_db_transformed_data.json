@@ -1,0 +1,24 @@
+{
+	"name": "DS_db_transformed_data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_adf_storage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "part-00000-91fd967c-7199-4e4a-a95c-199751329488-c000.csv",
+				"folderPath": "transformed",
+				"container": "consolidated-data"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}
