@@ -1,0 +1,24 @@
+{
+	"name": "DS_des_order",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_adf_storage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "consolidated-order.csv",
+				"folderPath": "Order-details",
+				"container": "consolidated-data"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

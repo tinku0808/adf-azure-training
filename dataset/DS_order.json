@@ -1,0 +1,20 @@
+{
+	"name": "DS_order",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_adf_storage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Excel",
+		"typeProperties": {
+			"sheetName": "Sheet1",
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"container": "input-data"
+			},
+			"firstRowAsHeader": true
+		},
+		"schema": []
+	}
+}
