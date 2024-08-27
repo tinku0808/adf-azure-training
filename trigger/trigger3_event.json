@@ -1,0 +1,24 @@
+{
+	"name": "trigger3_event",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "pipeline5",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/consolidated-data/blobs/order/",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/f42ca8e0-2be1-4d0a-87be-2ce9e5879a34/resourceGroups/tinku/providers/Microsoft.Storage/storageAccounts/tinkustorage8",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}
