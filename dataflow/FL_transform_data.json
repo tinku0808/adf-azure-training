@@ -1,0 +1,65 @@
+{
+	"name": "FL_transform_data",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_des_custormer",
+						"type": "DatasetReference"
+					},
+					"name": "customer"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_des_order",
+						"type": "DatasetReference"
+					},
+					"name": "order"
+				}
+			],
+			"sinks": [],
+			"transformations": [
+				{
+					"name": "join1order",
+					"description": "joining the customer and order table"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          CustomerID as string,",
+				"          FirstName as string,",
+				"          LastName as string,",
+				"          Email as string,",
+				"          PhoneNumber as string,",
+				"          Address as string,",
+				"          City as string,",
+				"          State as string,",
+				"          ZipCode as string,",
+				"          Country as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> customer",
+				"source(output(",
+				"          OrderID as short,",
+				"          ProductID as string,",
+				"          ProductName as string,",
+				"          Quantity as integer,",
+				"          OrderTimestamp as string,",
+				"          Price as double,",
+				"          CustomerID as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> order",
+				"customer, order join(customer@CustomerID == order@CustomerID,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1order"
+			]
+		}
+	}
+}
