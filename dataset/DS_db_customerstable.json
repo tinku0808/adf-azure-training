@@ -1,0 +1,16 @@
+{
+	"name": "DS_db_customerstable",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_adf_to_db",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "raw",
+			"table": "customers-table"
+		}
+	}
+}
