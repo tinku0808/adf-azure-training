@@ -8,7 +8,16 @@
 		"LS_AzureSqlDatabase1_password": {
 			"value": ""
 		},
+		"LS_adf_storage_connectionString": {
+			"value": ""
+		},
+		"LS_adf_to_db_password": {
+			"value": ""
+		},
 		"LS_blob_to_dataset_connectionString": {
+			"value": ""
+		},
+		"LS_postgres_to_adf_connectionString": {
 			"value": ""
 		},
 		"Ls_AzureBlobStorage1_connectionString": {
@@ -26,6 +35,15 @@
 		"LS_AzureSqlDatabase1_properties_typeProperties_userName": {
 			"value": "tinku"
 		},
+		"LS_adf_to_db_properties_typeProperties_server": {
+			"value": "server-tinku.database.windows.net"
+		},
+		"LS_adf_to_db_properties_typeProperties_database": {
+			"value": "database1"
+		},
+		"LS_adf_to_db_properties_typeProperties_userName": {
+			"value": "tinku"
+		},
 		"database_linkedservice_properties_typeProperties_server": {
 			"value": "server-tinku.database.windows.net"
 		},
@@ -36,9 +54,6 @@
 			"value": "tinku"
 		},
 		"trigger1_properties_typeProperties_scope": {
-			"value": "/subscriptions/f42ca8e0-2be1-4d0a-87be-2ce9e5879a34/resourceGroups/tinku/providers/Microsoft.Storage/storageAccounts/tinkustorage8"
-		},
-		"trigger3_event_properties_typeProperties_scope": {
 			"value": "/subscriptions/f42ca8e0-2be1-4d0a-87be-2ce9e5879a34/resourceGroups/tinku/providers/Microsoft.Storage/storageAccounts/tinkustorage8"
 		}
 	}

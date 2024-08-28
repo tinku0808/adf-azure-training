@@ -11,9 +11,21 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'LS_AzureSqlDatabase1'"
 		},
+		"LS_adf_storage_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_adf_storage'"
+		},
+		"LS_adf_to_db_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'LS_adf_to_db'"
+		},
 		"LS_blob_to_dataset_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'LS_blob_to_dataset'"
+		},
+		"LS_postgres_to_adf_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'LS_postgres_to_adf'"
 		},
 		"Ls_AzureBlobStorage1_connectionString": {
 			"type": "secureString",
@@ -35,6 +47,18 @@
 			"type": "string",
 			"defaultValue": "tinku"
 		},
+		"LS_adf_to_db_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "server-tinku.database.windows.net"
+		},
+		"LS_adf_to_db_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "database1"
+		},
+		"LS_adf_to_db_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "tinku"
+		},
 		"database_linkedservice_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "server-tinku.database.windows.net"
@@ -48,10 +72,6 @@
 			"defaultValue": "tinku"
 		},
 		"trigger1_properties_typeProperties_scope": {
-			"type": "string",
-			"defaultValue": "/subscriptions/f42ca8e0-2be1-4d0a-87be-2ce9e5879a34/resourceGroups/tinku/providers/Microsoft.Storage/storageAccounts/tinkustorage8"
-		},
-		"trigger3_event_properties_typeProperties_scope": {
 			"type": "string",
 			"defaultValue": "/subscriptions/f42ca8e0-2be1-4d0a-87be-2ce9e5879a34/resourceGroups/tinku/providers/Microsoft.Storage/storageAccounts/tinkustorage8"
 		},
@@ -85,8 +105,17 @@
 					"LS_AzureSqlDatabase1_password": {
 						"value": "[parameters('LS_AzureSqlDatabase1_password')]"
 					},
+					"LS_adf_storage_connectionString": {
+						"value": "[parameters('LS_adf_storage_connectionString')]"
+					},
+					"LS_adf_to_db_password": {
+						"value": "[parameters('LS_adf_to_db_password')]"
+					},
 					"LS_blob_to_dataset_connectionString": {
 						"value": "[parameters('LS_blob_to_dataset_connectionString')]"
+					},
+					"LS_postgres_to_adf_connectionString": {
+						"value": "[parameters('LS_postgres_to_adf_connectionString')]"
 					},
 					"Ls_AzureBlobStorage1_connectionString": {
 						"value": "[parameters('Ls_AzureBlobStorage1_connectionString')]"
@@ -103,6 +132,15 @@
 					"LS_AzureSqlDatabase1_properties_typeProperties_userName": {
 						"value": "[parameters('LS_AzureSqlDatabase1_properties_typeProperties_userName')]"
 					},
+					"LS_adf_to_db_properties_typeProperties_server": {
+						"value": "[parameters('LS_adf_to_db_properties_typeProperties_server')]"
+					},
+					"LS_adf_to_db_properties_typeProperties_database": {
+						"value": "[parameters('LS_adf_to_db_properties_typeProperties_database')]"
+					},
+					"LS_adf_to_db_properties_typeProperties_userName": {
+						"value": "[parameters('LS_adf_to_db_properties_typeProperties_userName')]"
+					},
 					"database_linkedservice_properties_typeProperties_server": {
 						"value": "[parameters('database_linkedservice_properties_typeProperties_server')]"
 					},
@@ -118,29 +156,6 @@
 				}
 			},
 			"dependsOn": []
-		},
-		{
-			"name": "DF-tinku8_ArmTemplate_1",
-			"type": "Microsoft.Resources/deployments",
-			"apiVersion": "2018-02-01",
-			"properties": {
-				"mode": "incremental",
-				"templateLink": {
-					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
-					"contentVersion": "1.0.0.0"
-				},
-				"parameters": {
-					"factoryName": {
-						"value": "[parameters('factoryName')]"
-					},
-					"trigger3_event_properties_typeProperties_scope": {
-						"value": "[parameters('trigger3_event_properties_typeProperties_scope')]"
-					}
-				}
-			},
-			"dependsOn": [
-				"[resourceId('Microsoft.Resources/deployments', 'DF-tinku8_ArmTemplate_0')]"
-			]
 		}
 	]
 }
