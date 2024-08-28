@@ -1,0 +1,16 @@
+{
+	"name": "DS_db_transformed_data",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_adf_to_database",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "prep",
+			"table": "transformed_data"
+		}
+	}
+}

@@ -1,0 +1,111 @@
+{
+	"name": "transforming",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_users",
+						"type": "DatasetReference"
+					},
+					"name": "Users"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_exam_results",
+						"type": "DatasetReference"
+					},
+					"name": "examsresult"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_exams",
+						"type": "DatasetReference"
+					},
+					"name": "exams"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_db_transformed_data",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "userstoexamresults"
+				},
+				{
+					"name": "join1toexams"
+				},
+				{
+					"name": "select1"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          id as short,",
+				"          email as string,",
+				"          password as string,",
+				"          role as string,",
+				"          name as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> Users",
+				"source(output(",
+				"          id as short,",
+				"          userId as short,",
+				"          examId as short,",
+				"          score as short",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> examsresult",
+				"source(output(",
+				"          id as short,",
+				"          title as string,",
+				"          description as string,",
+				"          completed as boolean",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> exams",
+				"Users, examsresult join(Users@id == userId,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> userstoexamresults",
+				"userstoexamresults, exams join(examId == exams@id,",
+				"     joinType:'inner',",
+				"     matchType:'exact',",
+				"     ignoreSpaces: false,",
+				"     broadcast: 'auto')~> join1toexams",
+				"join1toexams select(mapColumn(",
+				"          id = Users@id,",
+				"          name,",
+				"          examId,",
+				"          title,",
+				"          score",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     recreate:true,",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+			]
+		}
+	}
+}
