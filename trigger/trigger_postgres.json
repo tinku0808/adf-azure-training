@@ -1,0 +1,25 @@
+{
+	"name": "trigger_postgres",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "PL_postgres_to_db",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "ScheduleTrigger",
+		"typeProperties": {
+			"recurrence": {
+				"frequency": "Day",
+				"interval": 1,
+				"startTime": "2024-08-29T19:27:00",
+				"endTime": "2024-08-29T13:54:00",
+				"timeZone": "India Standard Time"
+			}
+		}
+	}
+}
