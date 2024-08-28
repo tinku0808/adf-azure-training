@@ -1,21 +1,17 @@
 {
-	"name": "DS_des_order",
+	"name": "DS_answers",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_adf_storage",
 			"type": "LinkedServiceReference"
-		},
-		"folder": {
-			"name": "adf_ass"
 		},
 		"annotations": [],
 		"type": "DelimitedText",
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "consolidated-order.csv",
-				"folderPath": "Order-details",
-				"container": "consolidated-data"
+				"fileName": "answers.csv",
+				"container": "training"
 			},
 			"columnDelimiter": ",",
 			"escapeChar": "\\",
