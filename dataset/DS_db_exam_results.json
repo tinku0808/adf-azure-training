@@ -5,6 +5,9 @@
 			"referenceName": "LS_adf_to_database",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "mini_ass"
+		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],

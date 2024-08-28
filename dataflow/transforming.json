@@ -1,6 +1,9 @@
 {
 	"name": "transforming",
 	"properties": {
+		"folder": {
+			"name": "mini_ass"
+		},
 		"type": "MappingDataFlow",
 		"typeProperties": {
 			"sources": [
