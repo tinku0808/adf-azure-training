@@ -1,0 +1,16 @@
+{
+	"name": "DS_db_ass_users",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_adf_to_database",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "raw",
+			"table": "postgres_users"
+		}
+	}
+}

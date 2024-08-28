@@ -1,0 +1,16 @@
+{
+	"name": "DS_azure_postgres_users",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_azure_postgres_to_adf",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzurePostgreSqlTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": "public",
+			"table": "User"
+		}
+	}
+}
