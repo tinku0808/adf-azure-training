@@ -1,0 +1,26 @@
+{
+	"name": "DS_WEB_TEST",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_adf_storage",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "WEBSCRAPING"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "products_testing.csv",
+				"container": "webscraping"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": []
+	}
+}

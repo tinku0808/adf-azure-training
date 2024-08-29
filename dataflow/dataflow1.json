@@ -1,0 +1,61 @@
+{
+	"name": "dataflow1",
+	"properties": {
+		"folder": {
+			"name": "webscraping"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_WEB_TEST",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [],
+			"transformations": [],
+			"scriptLines": [
+				"source(output(",
+				"          departmentCode as string,",
+				"          departmentName as string,",
+				"          discontinuedProductFlag1 as boolean,",
+				"          categoryCode as string,",
+				"          categoryName as string,",
+				"          discontinuedProductFlag2 as boolean,",
+				"          categoryCode1 as string,",
+				"          categoryName1 as string,",
+				"          searchCategoryCode as string,",
+				"          seriesCode as long,",
+				"          seriesName as string,",
+				"          minStandardUnitPrice as double,",
+				"          maxStandardUnitPrice as double,",
+				"          minPricePerPiece as double,",
+				"          maxPricePerPiece as double,",
+				"          brandCode as string,",
+				"          brandUrlCode as string,",
+				"          brandName as string,",
+				"          seriesStatus as boolean,",
+				"          catchCopy as string,",
+				"          minStandardDaysToShip as string,",
+				"          maxStandardDaysToShip as string,",
+				"          directCartType as string,",
+				"          priceCheckLessFlag as string,",
+				"          recommendFlag as string,",
+				"          volumeDiscountFlag as string,",
+				"          cValueFlag as boolean,",
+				"          stockItemFlag as short,",
+				"          displayStandardPriceFlag as boolean,",
+				"          discontinuedProductFlag as boolean,",
+				"          cadTypeList as string,",
+				"          comparisonSpecValueList as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     ignoreNoFilesFound: false) ~> source1"
+			]
+		}
+	}
+}
