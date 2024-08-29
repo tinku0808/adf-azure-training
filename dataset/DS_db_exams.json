@@ -1,5 +1,5 @@
 {
-	"name": "DS_db_users",
+	"name": "DS_db_exams",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_adf_to_db",
@@ -13,7 +13,7 @@
 		"schema": [],
 		"typeProperties": {
 			"schema": "raw",
-			"table": "postgres_users"
+			"table": "postgres_exams"
 		}
 	}
 }

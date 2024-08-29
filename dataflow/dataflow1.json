@@ -16,7 +16,14 @@
 				}
 			],
 			"sinks": [],
-			"transformations": [],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "split1"
+				}
+			],
 			"scriptLines": [
 				"source(output(",
 				"          departmentCode as string,",
@@ -54,7 +61,30 @@
 				"     ),",
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
-				"     ignoreNoFilesFound: false) ~> source1"
+				"     ignoreNoFilesFound: false) ~> source1",
+				"source1 select(mapColumn(",
+				"          departmentCode,",
+				"          departmentName,",
+				"          categoryCode,",
+				"          categoryName,",
+				"          SubcategoryCode = categoryCode1,",
+				"          SubcategoryName = categoryName1,",
+				"          seriesCode,",
+				"          seriesName,",
+				"          minPricePerPiece,",
+				"          maxPricePerPiece,",
+				"          brandCode,",
+				"          brandName,",
+				"          Features = catchCopy,",
+				"          minStandardDaysToShip,",
+				"          maxStandardDaysToShip,",
+				"          stockItemFlag",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 split(departmentName=='Automation Components',",
+				"     departmentName=='Fasteners',",
+				"     disjoint: true) ~> split1@(automationcomponents, Fasteners)"
 			]
 		}
 	}

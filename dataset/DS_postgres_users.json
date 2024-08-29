@@ -5,6 +5,9 @@
 			"referenceName": "LS_postgres_to_adf",
 			"type": "LinkedServiceReference"
 		},
+		"folder": {
+			"name": "fullstack"
+		},
 		"annotations": [],
 		"type": "AzurePostgreSqlTable",
 		"schema": [],
