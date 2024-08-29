@@ -15,15 +15,16 @@
 					"name": "source1"
 				}
 			],
-			"sinks": [],
-			"transformations": [
+			"sinks": [
 				{
-					"name": "select1"
-				},
-				{
-					"name": "split1"
+					"dataset": {
+						"referenceName": "DS_WEB_TEST_DB",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
 				}
 			],
+			"transformations": [],
 			"scriptLines": [
 				"source(output(",
 				"          departmentCode as string,",
@@ -62,29 +63,16 @@
 				"     allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     ignoreNoFilesFound: false) ~> source1",
-				"source1 select(mapColumn(",
-				"          departmentCode,",
-				"          departmentName,",
-				"          categoryCode,",
-				"          categoryName,",
-				"          SubcategoryCode = categoryCode1,",
-				"          SubcategoryName = categoryName1,",
-				"          seriesCode,",
-				"          seriesName,",
-				"          minPricePerPiece,",
-				"          maxPricePerPiece,",
-				"          brandCode,",
-				"          brandName,",
-				"          Features = catchCopy,",
-				"          minStandardDaysToShip,",
-				"          maxStandardDaysToShip,",
-				"          stockItemFlag",
-				"     ),",
+				"source1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:false,",
+				"     format: 'table',",
 				"     skipDuplicateMapInputs: true,",
-				"     skipDuplicateMapOutputs: true) ~> select1",
-				"select1 split(departmentName=='Automation Components',",
-				"     departmentName=='Fasteners',",
-				"     disjoint: true) ~> split1@(automationcomponents, Fasteners)"
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
 			]
 		}
 	}
