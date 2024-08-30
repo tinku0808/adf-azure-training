@@ -13,6 +13,105 @@
 	},
 	"resources": [
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_db_users')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_adf_to_db",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "fullstack"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "raw",
+					"table": "postgres_users"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_des_custormer')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_adf_storage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "consolidated-customer.csv",
+						"folderPath": "Customer-details",
+						"container": "consolidated-data"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_des_order')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_adf_storage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"fileName": "consolidated-order.csv",
+						"folderPath": "Order-details",
+						"container": "consolidated-data"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_order')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_adf_storage",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "Excel",
+				"typeProperties": {
+					"sheetName": "Sheet1",
+					"location": {
+						"type": "AzureBlobStorageLocation",
+						"container": "input-data"
+					},
+					"firstRowAsHeader": true
+				},
+				"schema": []
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_postgres_answers')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -145,7 +244,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DS_WEB_db_fasteners')]",
+			"name": "[concat(parameters('factoryName'), '/DS_report_db_automation')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -154,20 +253,20 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "splitting"
+					"name": "WEBSCRAPING"
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [],
 				"typeProperties": {
-					"schema": "prep",
-					"table": "fasteners_webscrap"
+					"schema": "report",
+					"table": "automation_webscrap"
 				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DS_web_db_electricals')]",
+			"name": "[concat(parameters('factoryName'), '/DS_report_db_electricals')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -176,20 +275,20 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "splitting"
+					"name": "WEBSCRAPING"
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [],
 				"typeProperties": {
-					"schema": "prep",
+					"schema": "report",
 					"table": "electricals_webscrap"
 				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DS_web_db_lab')]",
+			"name": "[concat(parameters('factoryName'), '/DS_report_db_fasteners')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -198,20 +297,20 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "splitting"
+					"name": "WEBSCRAPING"
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [],
 				"typeProperties": {
-					"schema": "prep",
-					"table": "LabCleanSupplies_webscrap"
+					"schema": "report",
+					"table": "fasteners_webscrap"
 				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DS_Web_db_machining')]",
+			"name": "[concat(parameters('factoryName'), '/DS_report_db_safety')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -220,14 +319,14 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "splitting"
+					"name": "WEBSCRAPING"
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [],
 				"typeProperties": {
-					"schema": "prep",
-					"table": "MachiningTools_webscrap"
+					"schema": "report",
+					"table": "safety_webscrap"
 				}
 			},
 			"dependsOn": []
@@ -250,50 +349,6 @@
 				"typeProperties": {
 					"schema": "prep",
 					"table": "MaterialHandlimgStorage_webscrap"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_Web_db_Materials')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_adf_to_db",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "splitting"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "prep",
-					"table": "Materials_webscrap"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_web_db_plastic')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_adf_to_db",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "splitting"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "prep",
-					"table": "PlasticMoldComponents_webscarp"
 				}
 			},
 			"dependsOn": []
@@ -387,7 +442,7 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DS_Web_db_Automation')]",
+			"name": "[concat(parameters('factoryName'), '/DS_web_db_electricals')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -403,50 +458,6 @@
 				"schema": [],
 				"typeProperties": {
 					"schema": "prep",
-					"table": "AutomationComponents_webscrap"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_report_db_automation')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_adf_to_db",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "WEBSCRAPING"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "report",
-					"table": "automation_webscrap"
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_report_db_electricals')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_adf_to_db",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "WEBSCRAPING"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "report",
 					"table": "electricals_webscrap"
 				}
 			},

@@ -17,7 +17,7 @@
 	},
 	"resources": [
 		{
-			"name": "[concat(parameters('factoryName'), '/DS_report_db_safety')]",
+			"name": "[concat(parameters('factoryName'), '/DS_web_db_lab')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -26,20 +26,20 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "WEBSCRAPING"
+					"name": "splitting"
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [],
 				"typeProperties": {
-					"schema": "report",
-					"table": "safety_webscrap"
+					"schema": "prep",
+					"table": "LabCleanSupplies_webscrap"
 				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DS_report_db_fasteners')]",
+			"name": "[concat(parameters('factoryName'), '/DS_web_db_plastic')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -48,14 +48,14 @@
 					"type": "LinkedServiceReference"
 				},
 				"folder": {
-					"name": "WEBSCRAPING"
+					"name": "splitting"
 				},
 				"annotations": [],
 				"type": "AzureSqlTable",
 				"schema": [],
 				"typeProperties": {
-					"schema": "report",
-					"table": "fasteners_webscrap"
+					"schema": "prep",
+					"table": "PlasticMoldComponents_webscarp"
 				}
 			},
 			"dependsOn": []
@@ -206,246 +206,6 @@
 					"elapsedTimeMetric": {}
 				},
 				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/STAGING_Uploadingtodb')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "webscraping"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "DS_WEB_TEST",
-								"type": "DatasetReference"
-							},
-							"name": "source1"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "DS_WEB_TEST_DB",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [],
-					"scriptLines": [
-						"source(output(",
-						"          departmentCode as string,",
-						"          departmentName as string,",
-						"          discontinuedProductFlag1 as boolean,",
-						"          categoryCode as string,",
-						"          categoryName as string,",
-						"          discontinuedProductFlag2 as boolean,",
-						"          categoryCode1 as string,",
-						"          categoryName1 as string,",
-						"          searchCategoryCode as string,",
-						"          seriesCode as long,",
-						"          seriesName as string,",
-						"          minStandardUnitPrice as double,",
-						"          maxStandardUnitPrice as double,",
-						"          minPricePerPiece as double,",
-						"          maxPricePerPiece as double,",
-						"          brandCode as string,",
-						"          brandUrlCode as string,",
-						"          brandName as string,",
-						"          seriesStatus as boolean,",
-						"          catchCopy as string,",
-						"          minStandardDaysToShip as string,",
-						"          maxStandardDaysToShip as string,",
-						"          directCartType as string,",
-						"          priceCheckLessFlag as string,",
-						"          recommendFlag as string,",
-						"          volumeDiscountFlag as string,",
-						"          cValueFlag as boolean,",
-						"          stockItemFlag as short,",
-						"          displayStandardPriceFlag as boolean,",
-						"          discontinuedProductFlag as boolean,",
-						"          cadTypeList as string,",
-						"          comparisonSpecValueList as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     ignoreNoFilesFound: false) ~> source1",
-						"source1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:false,",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
-					]
-				}
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/dataflow2')]",
-			"type": "Microsoft.DataFactory/factories/dataflows",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"folder": {
-					"name": "FULLSTACK"
-				},
-				"type": "MappingDataFlow",
-				"typeProperties": {
-					"sources": [
-						{
-							"dataset": {
-								"referenceName": "DS_db_exam_results",
-								"type": "DatasetReference"
-							},
-							"name": "examresults"
-						},
-						{
-							"dataset": {
-								"referenceName": "DS_db_exams",
-								"type": "DatasetReference"
-							},
-							"name": "exams"
-						},
-						{
-							"dataset": {
-								"referenceName": "DS_db_users",
-								"type": "DatasetReference"
-							},
-							"name": "users"
-						}
-					],
-					"sinks": [
-						{
-							"dataset": {
-								"referenceName": "DS_postgres_transformed",
-								"type": "DatasetReference"
-							},
-							"name": "sink1"
-						}
-					],
-					"transformations": [
-						{
-							"name": "join1"
-						},
-						{
-							"name": "join2"
-						},
-						{
-							"name": "select1"
-						},
-						{
-							"name": "aggregate1"
-						},
-						{
-							"name": "join3"
-						},
-						{
-							"name": "select2"
-						},
-						{
-							"name": "window1"
-						},
-						{
-							"name": "AlterRow1"
-						}
-					],
-					"scriptLines": [
-						"source(output(",
-						"          id as integer,",
-						"          userId as integer,",
-						"          examId as integer,",
-						"          score as integer",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> examresults",
-						"source(output(",
-						"          id as integer,",
-						"          title as string,",
-						"          description as string,",
-						"          completed as boolean",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> exams",
-						"source(output(",
-						"          id as integer,",
-						"          email as string,",
-						"          password as string,",
-						"          role as string,",
-						"          name as string",
-						"     ),",
-						"     allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     isolationLevel: 'READ_UNCOMMITTED',",
-						"     format: 'table') ~> users",
-						"users, examresults join(users@id == userId,",
-						"     joinType:'inner',",
-						"     matchType:'exact',",
-						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> join1",
-						"join1, exams join(examId == exams@id,",
-						"     joinType:'inner',",
-						"     matchType:'exact',",
-						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> join2",
-						"join2 select(mapColumn(",
-						"          id = users@id,",
-						"          name,",
-						"          examid = examId,",
-						"          title,",
-						"          score",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select1",
-						"select1 aggregate(groupBy(examid,",
-						"          title),",
-						"     MaxScore = max(score)) ~> aggregate1",
-						"aggregate1, select1 join(aggregate1@examid == select1@examid",
-						"     && MaxScore == score,",
-						"     joinType:'inner',",
-						"     matchType:'exact',",
-						"     ignoreSpaces: false,",
-						"     broadcast: 'auto')~> join3",
-						"join3 select(mapColumn(",
-						"          examid = aggregate1@examid,",
-						"          title = aggregate1@title,",
-						"          MaxScore,",
-						"          UserId = id,",
-						"          name,",
-						"          title = select1@title",
-						"     ),",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true) ~> select2",
-						"select2 window(asc(MaxScore, true),",
-						"     unique_id = rowNumber()) ~> window1",
-						"window1 alterRow(insertIf(isNull(unique_id)),",
-						"     upsertIf(!isNull(unique_id))) ~> AlterRow1",
-						"AlterRow1 sink(allowSchemaDrift: true,",
-						"     validateSchema: false,",
-						"     deletable:false,",
-						"     insertable:true,",
-						"     updateable:false,",
-						"     upsertable:true,",
-						"     keys:['unique_id'],",
-						"     format: 'table',",
-						"     skipDuplicateMapInputs: true,",
-						"     skipDuplicateMapOutputs: true,",
-						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
-					]
-				}
 			},
 			"dependsOn": []
 		},
@@ -889,7 +649,10 @@
 					]
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/DS_web_db_lab')]",
+				"[concat(variables('factoryId'), '/datasets/DS_web_db_plastic')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/REPORT_Table')]",
@@ -1143,10 +906,247 @@
 					]
 				}
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/DS_report_db_safety')]",
-				"[concat(variables('factoryId'), '/datasets/DS_report_db_fasteners')]"
-			]
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/STAGING_Uploadingtodb')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "webscraping"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DS_WEB_TEST",
+								"type": "DatasetReference"
+							},
+							"name": "source1"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DS_WEB_TEST_DB",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [],
+					"scriptLines": [
+						"source(output(",
+						"          departmentCode as string,",
+						"          departmentName as string,",
+						"          discontinuedProductFlag1 as boolean,",
+						"          categoryCode as string,",
+						"          categoryName as string,",
+						"          discontinuedProductFlag2 as boolean,",
+						"          categoryCode1 as string,",
+						"          categoryName1 as string,",
+						"          searchCategoryCode as string,",
+						"          seriesCode as long,",
+						"          seriesName as string,",
+						"          minStandardUnitPrice as double,",
+						"          maxStandardUnitPrice as double,",
+						"          minPricePerPiece as double,",
+						"          maxPricePerPiece as double,",
+						"          brandCode as string,",
+						"          brandUrlCode as string,",
+						"          brandName as string,",
+						"          seriesStatus as boolean,",
+						"          catchCopy as string,",
+						"          minStandardDaysToShip as string,",
+						"          maxStandardDaysToShip as string,",
+						"          directCartType as string,",
+						"          priceCheckLessFlag as string,",
+						"          recommendFlag as string,",
+						"          volumeDiscountFlag as string,",
+						"          cValueFlag as boolean,",
+						"          stockItemFlag as short,",
+						"          displayStandardPriceFlag as boolean,",
+						"          discontinuedProductFlag as boolean,",
+						"          cadTypeList as string,",
+						"          comparisonSpecValueList as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     ignoreNoFilesFound: false) ~> source1",
+						"source1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:false,",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/dataflow2')]",
+			"type": "Microsoft.DataFactory/factories/dataflows",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"folder": {
+					"name": "FULLSTACK"
+				},
+				"type": "MappingDataFlow",
+				"typeProperties": {
+					"sources": [
+						{
+							"dataset": {
+								"referenceName": "DS_db_exam_results",
+								"type": "DatasetReference"
+							},
+							"name": "examresults"
+						},
+						{
+							"dataset": {
+								"referenceName": "DS_db_exams",
+								"type": "DatasetReference"
+							},
+							"name": "exams"
+						},
+						{
+							"dataset": {
+								"referenceName": "DS_db_users",
+								"type": "DatasetReference"
+							},
+							"name": "users"
+						}
+					],
+					"sinks": [
+						{
+							"dataset": {
+								"referenceName": "DS_postgres_transformed",
+								"type": "DatasetReference"
+							},
+							"name": "sink1"
+						}
+					],
+					"transformations": [
+						{
+							"name": "join1"
+						},
+						{
+							"name": "join2"
+						},
+						{
+							"name": "select1"
+						},
+						{
+							"name": "aggregate1"
+						},
+						{
+							"name": "join3"
+						},
+						{
+							"name": "select2"
+						},
+						{
+							"name": "window1"
+						},
+						{
+							"name": "AlterRow1"
+						}
+					],
+					"scriptLines": [
+						"source(output(",
+						"          id as integer,",
+						"          userId as integer,",
+						"          examId as integer,",
+						"          score as integer",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> examresults",
+						"source(output(",
+						"          id as integer,",
+						"          title as string,",
+						"          description as string,",
+						"          completed as boolean",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> exams",
+						"source(output(",
+						"          id as integer,",
+						"          email as string,",
+						"          password as string,",
+						"          role as string,",
+						"          name as string",
+						"     ),",
+						"     allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     isolationLevel: 'READ_UNCOMMITTED',",
+						"     format: 'table') ~> users",
+						"users, examresults join(users@id == userId,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join1",
+						"join1, exams join(examId == exams@id,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join2",
+						"join2 select(mapColumn(",
+						"          id = users@id,",
+						"          name,",
+						"          examid = examId,",
+						"          title,",
+						"          score",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select1",
+						"select1 aggregate(groupBy(examid,",
+						"          title),",
+						"     MaxScore = max(score)) ~> aggregate1",
+						"aggregate1, select1 join(aggregate1@examid == select1@examid",
+						"     && MaxScore == score,",
+						"     joinType:'inner',",
+						"     matchType:'exact',",
+						"     ignoreSpaces: false,",
+						"     broadcast: 'auto')~> join3",
+						"join3 select(mapColumn(",
+						"          examid = aggregate1@examid,",
+						"          title = aggregate1@title,",
+						"          MaxScore,",
+						"          UserId = id,",
+						"          name,",
+						"          title = select1@title",
+						"     ),",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true) ~> select2",
+						"select2 window(asc(MaxScore, true),",
+						"     unique_id = rowNumber()) ~> window1",
+						"window1 alterRow(insertIf(isNull(unique_id)),",
+						"     upsertIf(!isNull(unique_id))) ~> AlterRow1",
+						"AlterRow1 sink(allowSchemaDrift: true,",
+						"     validateSchema: false,",
+						"     deletable:false,",
+						"     insertable:true,",
+						"     updateable:false,",
+						"     upsertable:true,",
+						"     keys:['unique_id'],",
+						"     format: 'table',",
+						"     skipDuplicateMapInputs: true,",
+						"     skipDuplicateMapOutputs: true,",
+						"     errorHandlingOption: 'stopOnFirstError') ~> sink1"
+					]
+				}
+			},
+			"dependsOn": []
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/PL_postgres_to_db')]",
@@ -1507,6 +1507,121 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/PL_prep_to _db')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "PREP_UpdatingandTransforming",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"source1": {},
+									"sink1": {},
+									"sink2": {},
+									"sink3": {},
+									"sink4": {},
+									"sink5": {},
+									"sink6": {},
+									"sink7": {},
+									"sink8": {},
+									"sink9": {},
+									"sink10": {},
+									"sink11": {},
+									"sink12": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "WEBSCRAPING"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/PREP_UpdatingandTransforming')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PL_report_to_db')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Data flow1",
+						"type": "ExecuteDataFlow",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"dataflow": {
+								"referenceName": "REPORT_Table",
+								"type": "DataFlowReference",
+								"parameters": {},
+								"datasetParameters": {
+									"automation": {},
+									"electricals": {},
+									"safety": {},
+									"fasteners": {},
+									"sink1": {},
+									"sink2": {},
+									"sink3": {},
+									"sink4": {}
+								}
+							},
+							"staging": {},
+							"compute": {
+								"coreCount": 8,
+								"computeType": "General"
+							},
+							"traceLevel": "Fine"
+						}
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"folder": {
+					"name": "WEBSCRAPING"
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/dataflows/REPORT_Table')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/PL_stage_to_db')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
@@ -1649,118 +1764,34 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PL_prep_to _db')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
+			"name": "[concat(parameters('factoryName'), '/trigger_Webscrap_report')]",
+			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
-				"activities": [
+				"annotations": [],
+				"runtimeState": "Started",
+				"pipelines": [
 					{
-						"name": "Data flow1",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
+						"pipelineReference": {
+							"referenceName": "PL_stage_to_db",
+							"type": "PipelineReference"
 						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "PREP_UpdatingandTransforming",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"source1": {},
-									"sink1": {},
-									"sink2": {},
-									"sink3": {},
-									"sink4": {},
-									"sink5": {},
-									"sink6": {},
-									"sink7": {},
-									"sink8": {},
-									"sink9": {},
-									"sink10": {},
-									"sink11": {},
-									"sink12": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
+						"parameters": {}
 					}
 				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"folder": {
-					"name": "WEBSCRAPING"
-				},
-				"annotations": []
+				"type": "BlobEventsTrigger",
+				"typeProperties": {
+					"blobPathBeginsWith": "/webscraping/blobs/",
+					"blobPathEndsWith": ".csv",
+					"ignoreEmptyBlobs": true,
+					"scope": "[parameters('trigger_Webscrap_report_properties_typeProperties_scope')]",
+					"events": [
+						"Microsoft.Storage.BlobCreated"
+					]
+				}
 			},
 			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/PREP_UpdatingandTransforming')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/PL_report_to_db')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "Data flow1",
-						"type": "ExecuteDataFlow",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"dataflow": {
-								"referenceName": "REPORT_Table",
-								"type": "DataFlowReference",
-								"parameters": {},
-								"datasetParameters": {
-									"automation": {},
-									"electricals": {},
-									"safety": {},
-									"fasteners": {},
-									"sink1": {},
-									"sink2": {},
-									"sink3": {},
-									"sink4": {}
-								}
-							},
-							"staging": {},
-							"compute": {
-								"coreCount": 8,
-								"computeType": "General"
-							},
-							"traceLevel": "Fine"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"folder": {
-					"name": "WEBSCRAPING"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/dataflows/REPORT_Table')]"
+				"[concat(variables('factoryId'), '/pipelines/PL_stage_to_db')]"
 			]
 		},
 		{
@@ -1792,37 +1823,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/pipelines/PL_postgres_to_db')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/trigger_Webscrap_report')]",
-			"type": "Microsoft.DataFactory/factories/triggers",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"runtimeState": "Stopped",
-				"pipelines": [
-					{
-						"pipelineReference": {
-							"referenceName": "PL_stage_to_db",
-							"type": "PipelineReference"
-						},
-						"parameters": {}
-					}
-				],
-				"type": "BlobEventsTrigger",
-				"typeProperties": {
-					"blobPathBeginsWith": "/webscraping/blobs/",
-					"blobPathEndsWith": ".csv",
-					"ignoreEmptyBlobs": true,
-					"scope": "[parameters('trigger_Webscrap_report_properties_typeProperties_scope')]",
-					"events": [
-						"Microsoft.Storage.BlobCreated"
-					]
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/pipelines/PL_stage_to_db')]"
 			]
 		}
 	]
