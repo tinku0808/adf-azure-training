@@ -2,7 +2,7 @@
 	"name": "trigger_postgres",
 	"properties": {
 		"annotations": [],
-		"runtimeState": "Stopped",
+		"runtimeState": "Started",
 		"pipelines": [
 			{
 				"pipelineReference": {
@@ -16,8 +16,8 @@
 			"recurrence": {
 				"frequency": "Minute",
 				"interval": 3,
-				"startTime": "2024-08-29T10:03:00",
-				"endTime": "2024-08-29T14:18:00",
+				"startTime": "2024-08-30T09:34:00",
+				"endTime": "2024-08-31T14:18:00",
 				"timeZone": "India Standard Time"
 			}
 		}
