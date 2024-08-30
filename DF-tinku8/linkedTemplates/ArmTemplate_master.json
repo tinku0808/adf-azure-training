@@ -75,6 +75,10 @@
 			"type": "string",
 			"defaultValue": "/subscriptions/f42ca8e0-2be1-4d0a-87be-2ce9e5879a34/resourceGroups/tinku/providers/Microsoft.Storage/storageAccounts/tinkustorage8"
 		},
+		"trigger_Webscrap_report_properties_typeProperties_scope": {
+			"type": "string",
+			"defaultValue": "/subscriptions/f42ca8e0-2be1-4d0a-87be-2ce9e5879a34/resourceGroups/tinku/providers/Microsoft.Storage/storageAccounts/tinkustorage8"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -175,6 +179,29 @@
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'DF-tinku8_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "DF-tinku8_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"trigger_Webscrap_report_properties_typeProperties_scope": {
+						"value": "[parameters('trigger_Webscrap_report_properties_typeProperties_scope')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'DF-tinku8_ArmTemplate_1')]"
 			]
 		}
 	]
