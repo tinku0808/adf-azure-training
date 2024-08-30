@@ -1031,6 +1031,30 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/DS_postgres_transformed')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_adf_to_db",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "fullstack"
+				},
+				"annotations": [],
+				"type": "AzureSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "prep",
+					"table": "transformed"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/LS_adf_to_db')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DS_postgres_users')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -1222,7 +1246,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -1237,8 +1261,8 @@
 					"recurrence": {
 						"frequency": "Minute",
 						"interval": 3,
-						"startTime": "2024-08-29T10:03:00",
-						"endTime": "2024-08-29T14:18:00",
+						"startTime": "2024-08-30T09:34:00",
+						"endTime": "2024-08-31T14:18:00",
 						"timeZone": "India Standard Time"
 					}
 				}
@@ -1472,10 +1496,8 @@
 						"     skipDuplicateMapOutputs: true) ~> select2",
 						"select2 window(asc(MaxScore, true),",
 						"     unique_id = rowNumber()) ~> window1",
-						"window1 alterRow(insertIf(isNull(unique_id)\r",
-						"),",
-						"     upsertIf(!isNull(unique_id)\r",
-						")) ~> AlterRow1",
+						"window1 alterRow(insertIf(isNull(unique_id)),",
+						"     upsertIf(!isNull(unique_id))) ~> AlterRow1",
 						"AlterRow1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
@@ -1495,30 +1517,6 @@
 				"[concat(variables('factoryId'), '/datasets/DS_db_exams')]",
 				"[concat(variables('factoryId'), '/datasets/DS_db_users')]",
 				"[concat(variables('factoryId'), '/datasets/DS_postgres_transformed')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/DS_postgres_transformed')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_adf_to_db",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "fullstack"
-				},
-				"annotations": [],
-				"type": "AzureSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "prep",
-					"table": "transformed"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/LS_adf_to_db')]"
 			]
 		}
 	]

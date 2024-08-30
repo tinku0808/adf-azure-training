@@ -101,28 +101,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/DS_postgres_users')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "LS_postgres_to_adf",
-					"type": "LinkedServiceReference"
-				},
-				"folder": {
-					"name": "fullstack"
-				},
-				"annotations": [],
-				"type": "AzurePostgreSqlTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": "public",
-					"table": "User"
-				}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/DS_postgres_transformed')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -140,6 +118,28 @@
 				"typeProperties": {
 					"schema": "prep",
 					"table": "transformed"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DS_postgres_users')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "LS_postgres_to_adf",
+					"type": "LinkedServiceReference"
+				},
+				"folder": {
+					"name": "fullstack"
+				},
+				"annotations": [],
+				"type": "AzurePostgreSqlTable",
+				"schema": [],
+				"typeProperties": {
+					"schema": "public",
+					"table": "User"
 				}
 			},
 			"dependsOn": []
@@ -515,10 +515,8 @@
 						"     skipDuplicateMapOutputs: true) ~> select2",
 						"select2 window(asc(MaxScore, true),",
 						"     unique_id = rowNumber()) ~> window1",
-						"window1 alterRow(insertIf(isNull(unique_id)\r",
-						"),",
-						"     upsertIf(!isNull(unique_id)\r",
-						")) ~> AlterRow1",
+						"window1 alterRow(insertIf(isNull(unique_id)),",
+						"     upsertIf(!isNull(unique_id))) ~> AlterRow1",
 						"AlterRow1 sink(allowSchemaDrift: true,",
 						"     validateSchema: false,",
 						"     deletable:false,",
@@ -955,7 +953,7 @@
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Stopped",
+				"runtimeState": "Started",
 				"pipelines": [
 					{
 						"pipelineReference": {
@@ -970,8 +968,8 @@
 					"recurrence": {
 						"frequency": "Minute",
 						"interval": 3,
-						"startTime": "2024-08-29T10:03:00",
-						"endTime": "2024-08-29T14:18:00",
+						"startTime": "2024-08-30T09:34:00",
+						"endTime": "2024-08-31T14:18:00",
 						"timeZone": "India Standard Time"
 					}
 				}
