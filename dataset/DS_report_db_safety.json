@@ -1,5 +1,5 @@
 {
-	"name": "DS_WEB_TEST_DB",
+	"name": "DS_report_db_safety",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_adf_to_db",
@@ -12,8 +12,8 @@
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "raw",
-			"table": "testing_products"
+			"schema": "report",
+			"table": "safety_webscrap"
 		}
 	}
 }

@@ -1,0 +1,251 @@
+{
+	"name": "REPORT_Table",
+	"properties": {
+		"folder": {
+			"name": "webscraping"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_Web_db_Automation",
+						"type": "DatasetReference"
+					},
+					"name": "automation"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_web_db_electricals",
+						"type": "DatasetReference"
+					},
+					"name": "electricals"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_web_db_Safety",
+						"type": "DatasetReference"
+					},
+					"name": "safety"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_WEB_db_fasteners",
+						"type": "DatasetReference"
+					},
+					"name": "fasteners"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_report_db_automation",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_report_db_electricals",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_report_db_safety",
+						"type": "DatasetReference"
+					},
+					"name": "sink3"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_report_db_fasteners",
+						"type": "DatasetReference"
+					},
+					"name": "sink4"
+				}
+			],
+			"transformations": [
+				{
+					"name": "window1"
+				},
+				{
+					"name": "AlterRow1"
+				},
+				{
+					"name": "window2"
+				},
+				{
+					"name": "alterRow"
+				},
+				{
+					"name": "window3"
+				},
+				{
+					"name": "alterRow2"
+				},
+				{
+					"name": "window4"
+				},
+				{
+					"name": "alterRow3"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          departmentCode as string,",
+				"          departmentName as string,",
+				"          categoryCode as string,",
+				"          categoryName as string,",
+				"          SubcategoryCode as string,",
+				"          SubcategoryName as string,",
+				"          seriesCode as long,",
+				"          seriesName as string,",
+				"          minPricePerPiece as double,",
+				"          maxPricePerPiece as double,",
+				"          brandCode as string,",
+				"          brandName as string,",
+				"          Features as string,",
+				"          minStandardDaysToShip as string,",
+				"          maxStandardDaysToShip as string,",
+				"          stockItemFlag as short,",
+				"          unique_id as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> automation",
+				"source(output(",
+				"          departmentCode as string,",
+				"          departmentName as string,",
+				"          categoryCode as string,",
+				"          categoryName as string,",
+				"          SubcategoryCode as string,",
+				"          SubcategoryName as string,",
+				"          seriesCode as long,",
+				"          seriesName as string,",
+				"          minPricePerPiece as double,",
+				"          maxPricePerPiece as double,",
+				"          brandCode as string,",
+				"          brandName as string,",
+				"          Features as string,",
+				"          minStandardDaysToShip as string,",
+				"          maxStandardDaysToShip as string,",
+				"          stockItemFlag as short,",
+				"          unique_id as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> electricals",
+				"source(output(",
+				"          departmentCode as string,",
+				"          departmentName as string,",
+				"          categoryCode as string,",
+				"          categoryName as string,",
+				"          SubcategoryCode as string,",
+				"          SubcategoryName as string,",
+				"          seriesCode as long,",
+				"          seriesName as string,",
+				"          minPricePerPiece as double,",
+				"          maxPricePerPiece as double,",
+				"          brandCode as string,",
+				"          brandName as string,",
+				"          Features as string,",
+				"          minStandardDaysToShip as string,",
+				"          maxStandardDaysToShip as string,",
+				"          stockItemFlag as short,",
+				"          unique_id as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> safety",
+				"source(output(",
+				"          departmentCode as string,",
+				"          departmentName as string,",
+				"          categoryCode as string,",
+				"          categoryName as string,",
+				"          SubcategoryCode as string,",
+				"          SubcategoryName as string,",
+				"          seriesCode as long,",
+				"          seriesName as string,",
+				"          minPricePerPiece as double,",
+				"          maxPricePerPiece as double,",
+				"          brandCode as string,",
+				"          brandName as string,",
+				"          Features as string,",
+				"          minStandardDaysToShip as string,",
+				"          maxStandardDaysToShip as string,",
+				"          stockItemFlag as short,",
+				"          unique_id as integer",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> fasteners",
+				"automation window(asc(categoryName, true),",
+				"     countofproducts = count(seriesCode)) ~> window1",
+				"window1 alterRow(upsertIf(!isNull(unique_id)),",
+				"     insertIf(isNull(unique_id))) ~> AlterRow1",
+				"electricals window(asc(categoryName, true),",
+				"     countOfProducts = count(seriesCode)) ~> window2",
+				"window2 alterRow(insertIf(isNull(unique_id)),",
+				"     upsertIf(!isNull(unique_id))) ~> alterRow",
+				"safety window(asc(categoryName, true),",
+				"     countOfProducts = count(seriesCode)) ~> window3",
+				"window3 alterRow(insertIf(isNull(unique_id)),",
+				"     upsertIf(!isNull(unique_id))) ~> alterRow2",
+				"fasteners window(asc(categoryName, true),",
+				"     countOfProduct = count(seriesCode)) ~> window4",
+				"window4 alterRow(insertIf(isNull(unique_id)),",
+				"     upsertIf(!isNull(unique_id))) ~> alterRow3",
+				"AlterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['unique_id'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
+				"alterRow sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['unique_id'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink2",
+				"alterRow2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['unique_id'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink3",
+				"alterRow3 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['unique_id'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink4"
+			]
+		}
+	}
+}

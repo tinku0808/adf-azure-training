@@ -1,0 +1,439 @@
+{
+	"name": "PREP_UpdatingandTransforming",
+	"properties": {
+		"folder": {
+			"name": "webscraping"
+		},
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "DS_WEB_TEST_DB",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "DS_WEB_db_fasteners",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_web_db_electricals",
+						"type": "DatasetReference"
+					},
+					"name": "sink2"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_web_db_lab",
+						"type": "DatasetReference"
+					},
+					"name": "sink3"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Web_db_machining",
+						"type": "DatasetReference"
+					},
+					"name": "sink4"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_web_db_MaterialHandling",
+						"type": "DatasetReference"
+					},
+					"name": "sink5"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Web_db_Materials",
+						"type": "DatasetReference"
+					},
+					"name": "sink6"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_web_db_plastic",
+						"type": "DatasetReference"
+					},
+					"name": "sink7"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_web_db_PressDie",
+						"type": "DatasetReference"
+					},
+					"name": "sink8"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_web_db_Processing",
+						"type": "DatasetReference"
+					},
+					"name": "sink9"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_web_db_Safety",
+						"type": "DatasetReference"
+					},
+					"name": "sink10"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_web_db_Wiring",
+						"type": "DatasetReference"
+					},
+					"name": "sink11"
+				},
+				{
+					"dataset": {
+						"referenceName": "DS_Web_db_Automation",
+						"type": "DatasetReference"
+					},
+					"name": "sink12"
+				}
+			],
+			"transformations": [
+				{
+					"name": "select1"
+				},
+				{
+					"name": "split1"
+				},
+				{
+					"name": "window1"
+				},
+				{
+					"name": "AlterRow"
+				},
+				{
+					"name": "window2"
+				},
+				{
+					"name": "alterRow1"
+				},
+				{
+					"name": "window3"
+				},
+				{
+					"name": "alterRow2"
+				},
+				{
+					"name": "window4"
+				},
+				{
+					"name": "alterRow3"
+				},
+				{
+					"name": "window5"
+				},
+				{
+					"name": "alterRow4"
+				},
+				{
+					"name": "window6"
+				},
+				{
+					"name": "alterRow5"
+				},
+				{
+					"name": "window7"
+				},
+				{
+					"name": "alterRow6"
+				},
+				{
+					"name": "window8"
+				},
+				{
+					"name": "alterRow7"
+				},
+				{
+					"name": "window9"
+				},
+				{
+					"name": "alterRow8"
+				},
+				{
+					"name": "window10"
+				},
+				{
+					"name": "alterRow9"
+				},
+				{
+					"name": "window11"
+				},
+				{
+					"name": "alterRow10"
+				},
+				{
+					"name": "window12"
+				},
+				{
+					"name": "alterRow11"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          departmentCode as string,",
+				"          departmentName as string,",
+				"          discontinuedProductFlag1 as boolean,",
+				"          categoryCode as string,",
+				"          categoryName as string,",
+				"          discontinuedProductFlag2 as boolean,",
+				"          categoryCode1 as string,",
+				"          categoryName1 as string,",
+				"          searchCategoryCode as string,",
+				"          seriesCode as long,",
+				"          seriesName as string,",
+				"          minStandardUnitPrice as double,",
+				"          maxStandardUnitPrice as double,",
+				"          minPricePerPiece as double,",
+				"          maxPricePerPiece as double,",
+				"          brandCode as string,",
+				"          brandUrlCode as string,",
+				"          brandName as string,",
+				"          seriesStatus as boolean,",
+				"          catchCopy as string,",
+				"          minStandardDaysToShip as string,",
+				"          maxStandardDaysToShip as string,",
+				"          directCartType as string,",
+				"          priceCheckLessFlag as string,",
+				"          recommendFlag as string,",
+				"          volumeDiscountFlag as string,",
+				"          cValueFlag as boolean,",
+				"          stockItemFlag as short,",
+				"          displayStandardPriceFlag as boolean,",
+				"          discontinuedProductFlag as boolean,",
+				"          cadTypeList as string,",
+				"          comparisonSpecValueList as string",
+				"     ),",
+				"     allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"source1 select(mapColumn(",
+				"          departmentCode,",
+				"          departmentName,",
+				"          categoryCode,",
+				"          categoryName,",
+				"          SubcategoryCode = categoryCode1,",
+				"          SubcategoryName = categoryName1,",
+				"          seriesCode,",
+				"          seriesName,",
+				"          minPricePerPiece,",
+				"          maxPricePerPiece,",
+				"          brandCode,",
+				"          brandName,",
+				"          Features = catchCopy,",
+				"          minStandardDaysToShip,",
+				"          maxStandardDaysToShip,",
+				"          stockItemFlag",
+				"     ),",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> select1",
+				"select1 split(departmentName == 'Automation Components',",
+				"     departmentName == 'Fasteners',",
+				"     departmentName == 'Electrical & Controls',",
+				"     departmentName == 'Lab & Clean Room Supplies',",
+				"     departmentName == 'Machining tools',",
+				"     departmentName == 'Material Handling & Storage',",
+				"     departmentName == 'Materials',",
+				"     departmentName == 'Plastic Mold Components',",
+				"     departmentName == 'Press Die Components',",
+				"     departmentName == 'Processing Tools',",
+				"     departmentName == 'Safety & General Supplies',",
+				"     departmentName == 'Wiring Components',",
+				"     disjoint: false) ~> split1@(automationcomponents, fasteners, ElectricalsControls, LabCleanRoomSupplies, Machiningtools, MaterialHandlingStorage, Materials, PlasticMoldComponents, PressDieComponents, ProcessingTools, SafetyGeneralSupplies, WiringComponents)",
+				"split1@fasteners window(asc(departmentCode, true),",
+				"     unique_id = rowNumber()) ~> window1",
+				"window1 alterRow(insertIf(isNull(unique_id)),",
+				"     upsertIf(!isNull(unique_id))) ~> AlterRow",
+				"split1@ElectricalsControls window(asc(departmentCode, true),",
+				"     unique_id = rowNumber()) ~> window2",
+				"window2 alterRow(insertIf(isNull(unique_id)),",
+				"     upsertIf(!isNull(unique_id))) ~> alterRow1",
+				"split1@LabCleanRoomSupplies window(asc(departmentCode, true),",
+				"     unique_id = rowNumber()) ~> window3",
+				"window3 alterRow(insertIf(isNull(unique_id)),",
+				"     upsertIf(!isNull(unique_id))) ~> alterRow2",
+				"split1@Machiningtools window(asc(departmentCode, true),",
+				"     unique_id = rowNumber()) ~> window4",
+				"window4 alterRow(insertIf(isNull(unique_id)),",
+				"     upsertIf(!isNull(unique_id))) ~> alterRow3",
+				"split1@MaterialHandlingStorage window(asc(departmentCode, true),",
+				"     unique_id = rowNumber()) ~> window5",
+				"window5 alterRow(insertIf(isNull(unique_id)),",
+				"     upsertIf(!isNull(unique_id))) ~> alterRow4",
+				"split1@Materials window(asc(departmentCode, true),",
+				"     unique_id = rowNumber()) ~> window6",
+				"window6 alterRow(insertIf(isNull(unique_id)),",
+				"     upsertIf(!isNull(unique_id))) ~> alterRow5",
+				"split1@PlasticMoldComponents window(asc(departmentCode, true),",
+				"     unique_id = rowNumber()) ~> window7",
+				"window7 alterRow(insertIf(isNull(unique_id)),",
+				"     upsertIf(!isNull(unique_id))) ~> alterRow6",
+				"split1@PressDieComponents window(asc(departmentCode, true),",
+				"     unique_id = rowNumber()) ~> window8",
+				"window8 alterRow(insertIf(isNull(unique_id)),",
+				"     upsertIf(!isNull(unique_id))) ~> alterRow7",
+				"split1@ProcessingTools window(asc(departmentCode, true),",
+				"     unique_id = rowNumber()) ~> window9",
+				"window9 alterRow(insertIf(isNull(unique_id)),",
+				"     upsertIf(!isNull(unique_id))) ~> alterRow8",
+				"split1@SafetyGeneralSupplies window(asc(departmentCode, true),",
+				"     unique_id = rowNumber()) ~> window10",
+				"window10 alterRow(insertIf(isNull(unique_id)),",
+				"     upsertIf(!isNull(unique_id))) ~> alterRow9",
+				"split1@WiringComponents window(asc(departmentCode, true),",
+				"     unique_id = rowNumber()) ~> window11",
+				"window11 alterRow(insertIf(isNull(unique_id)),",
+				"     upsertIf(!isNull(unique_id))) ~> alterRow10",
+				"split1@automationcomponents window(asc(departmentCode, true),",
+				"     unique_id = rowNumber()) ~> window12",
+				"window12 alterRow(insertIf(isNull(unique_id)),",
+				"     upsertIf(!isNull(unique_id))) ~> alterRow11",
+				"AlterRow sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['unique_id'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink1",
+				"alterRow1 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['unique_id'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink2",
+				"alterRow2 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['unique_id'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink3",
+				"alterRow3 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['unique_id'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink4",
+				"alterRow4 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['unique_id'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink5",
+				"alterRow5 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['unique_id'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink6",
+				"alterRow6 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['unique_id'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink7",
+				"alterRow7 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['unique_id'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink8",
+				"alterRow8 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['unique_id'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink9",
+				"alterRow9 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['unique_id'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink10",
+				"alterRow10 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['unique_id'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink11",
+				"alterRow11 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     deletable:false,",
+				"     insertable:true,",
+				"     updateable:false,",
+				"     upsertable:true,",
+				"     keys:['unique_id'],",
+				"     format: 'table',",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true,",
+				"     errorHandlingOption: 'stopOnFirstError') ~> sink12"
+			]
+		}
+	}
+}

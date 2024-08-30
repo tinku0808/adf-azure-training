@@ -1,0 +1,25 @@
+{
+	"name": "trigger_Webscrap_report",
+	"properties": {
+		"annotations": [],
+		"runtimeState": "Started",
+		"pipelines": [
+			{
+				"pipelineReference": {
+					"referenceName": "PL_stage_to_db",
+					"type": "PipelineReference"
+				}
+			}
+		],
+		"type": "BlobEventsTrigger",
+		"typeProperties": {
+			"blobPathBeginsWith": "/webscraping/blobs/",
+			"blobPathEndsWith": ".csv",
+			"ignoreEmptyBlobs": true,
+			"scope": "/subscriptions/f42ca8e0-2be1-4d0a-87be-2ce9e5879a34/resourceGroups/tinku/providers/Microsoft.Storage/storageAccounts/tinkustorage8",
+			"events": [
+				"Microsoft.Storage.BlobCreated"
+			]
+		}
+	}
+}

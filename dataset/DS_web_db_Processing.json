@@ -1,19 +1,19 @@
 {
-	"name": "DS_WEB_TEST_DB",
+	"name": "DS_web_db_Processing",
 	"properties": {
 		"linkedServiceName": {
 			"referenceName": "LS_adf_to_db",
 			"type": "LinkedServiceReference"
 		},
 		"folder": {
-			"name": "WEBSCRAPING"
+			"name": "splitting"
 		},
 		"annotations": [],
 		"type": "AzureSqlTable",
 		"schema": [],
 		"typeProperties": {
-			"schema": "raw",
-			"table": "testing_products"
+			"schema": "prep",
+			"table": "ProcessingTools_webscrap"
 		}
 	}
 }

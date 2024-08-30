@@ -1,5 +1,5 @@
 {
-	"name": "dataflow1",
+	"name": "STAGING_Uploadingtodb",
 	"properties": {
 		"folder": {
 			"name": "webscraping"
